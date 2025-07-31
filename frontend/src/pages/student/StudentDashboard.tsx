@@ -1,11 +1,15 @@
 import React from 'react';
 
+// Define possible status values as a union of string literals
+type TranscriptStatus = 'En cours' | 'Traité' | 'Refusé' | 'Aucune demande';
+
+// Define upcoming exams and complaints data
 const upcomingExams = [
   { course: 'Mathématiques', date: '2025-08-02', type: 'Examen Final' },
   { course: 'Physique', date: '2025-08-05', type: 'Test de Chapitre' },
 ];
 
-const transcriptStatus = 'En cours'; // Or: "Traité", "Refusé", "Aucune demande"
+const transcriptStatus: TranscriptStatus = 'En cours'; // Use the TranscriptStatus type here
 
 const recentComplaints = [
   { course: 'Chimie', exam: 'Examen Mi-Semestre', status: 'En attente' },
@@ -37,14 +41,14 @@ const StudentDashboard: React.FC = () => {
       </div>
 
       {/* Transcript Request */}
-      <div className="bg-white shadow p-4 rounded">
+      {/* <div className="bg-white shadow p-4 rounded">
         <h2 className="text-xl font-semibold text-[#4A4A8D] mb-2">📄 Statut de votre Relevé de Notes</h2>
         {transcriptStatus === 'Aucune demande' ? (
           <p className="text-gray-600">Vous n'avez soumis aucune demande de relevé.</p>
         ) : (
           <p className="text-gray-800">Votre dernière demande est <span className="font-semibold text-green-600">{transcriptStatus}</span>.</p>
         )}
-      </div>
+      </div> */}
 
       {/* Recent Complaints */}
       <div className="bg-white shadow p-4 rounded">

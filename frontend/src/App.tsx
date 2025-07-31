@@ -26,10 +26,10 @@ import SubmitComplaint from './pages/student/SubmitComplaint';
 import RequestTranscript from './pages/student/RequestTranscript';
 
 // Common Pages
-import Login from './pages/common/Login';
-import Register from './pages/common/Register';
+import Login from './auth/Login';
+import Register from './auth/Register';
 import Profile from './pages/common/Profile';
-import Unauthorized from './pages/common/Unauthorized';
+import Unauthorized from './pages/common/Unathorized';
 
 // Layout
 import AdminLayout from './layouts/AdminLayout';

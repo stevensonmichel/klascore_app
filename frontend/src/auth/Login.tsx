@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // adjust path if needed
+import { useAuth } from '../context/AuthContext'; // Adjust path if needed
+
+// Define the Role type
+type Role = 'admin' | 'professor' | 'student';
+
+// Define the User interface
+interface User {
+  id: number;
+  username: string;  // Use 'username' instead of 'name'
+  role: Role;
+  token: string;
+}
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -14,7 +25,7 @@ const Login: React.FC = () => {
       const res = await fetch('http://localhost:8000/auth/login/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
 
       if (res.ok) {
@@ -24,12 +35,12 @@ const Login: React.FC = () => {
         localStorage.setItem('access', data.access);
         localStorage.setItem('refresh', data.refresh);
 
-        // Set context
+        // Set context with correct properties
         login({
           token: data.access,
           role: data.role,
-          id: data.id,              // if returned by backend
-          name: data.username || '', // fallback if name isn't included
+          id: data.id,              // id returned by backend
+          username: data.username || '', // changed 'name' to 'username'
         });
 
         // Redirect to role-based dashboard

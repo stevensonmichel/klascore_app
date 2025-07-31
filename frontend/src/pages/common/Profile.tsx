@@ -1,9 +1,19 @@
 import React from 'react';
 import { useAuth } from '../../context/AuthContext';
 
+// Assuming you have a User type defined
+interface User {
+  username?: string;  // Optional property
+  email: string;
+  phone?: string;
+  role: string;
+}
+
+
 const Profile: React.FC = () => {
   const { user, logout } = useAuth();
 
+  // Check if user is null or undefined
   if (!user) return null;
 
   return (
