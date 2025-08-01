@@ -11,7 +11,7 @@ const Register: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8000/api/register/', {
+      const res = await fetch('http://localhost:8000/auth/register/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, username, password, role })
@@ -47,7 +47,7 @@ const Register: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-gray-700 mb-2">Nom d'utilisateur</label>
+            <label className="block text-gray-700 mb-2">Username</label>
             <input
               type="text"
               value={username}

@@ -1,12 +1,9 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+from schools.models import School  # Import School model if necessary
 
-User = get_user_model()
-
-class Classe(models.Model):
-    name = models.CharField(max_length=100)
-    professor = models.ForeignKey(User, on_delete=models.CASCADE)
-    student_count = models.IntegerField(default=0)
+class Class(models.Model):
+    name = models.CharField(max_length=255)
+    school = models.ForeignKey(School, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
