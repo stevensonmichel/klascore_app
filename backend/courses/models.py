@@ -1,11 +1,19 @@
 # course/models.py
 from django.db import models
-from classes.models import Class  # Assuming the Class model is in the admin_panel app
 
 class Course(models.Model):
-    name = models.CharField(max_length=255)  # Name of the course (e.g., "Mathematics - 9EME AF")
-    description = models.TextField()  # Detailed description of the course
-    class_instance = models.ForeignKey(Class, on_delete=models.CASCADE)  # Links this course to a specific class (Many-to-One)
+    COURSE_CHOICES = [
+        ('Mathematics', 'Mathematiques'),
+        ('Physics', 'Physique'),
+        ('Chemistry', 'Chimie'),
+        ('Biology', 'Biologie'),
+        ('History', 'Histoire'),
+        ('Geography', 'Géographie'),
+        # Add more predefined courses as needed
+    ]
+    name = models.CharField(max_length=255) 
+    description = models.TextField()  
+
 
     def __str__(self):
         return self.name

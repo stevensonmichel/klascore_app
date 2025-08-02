@@ -1,10 +1,32 @@
-# classes/models.py
+# create_schools.py
+import sys
+import os
+import django
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from django.db import models
+
+
+# Setup Django settings
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'klascore_backend.settings')
+django.setup()
 from schools.models import School
+from users.models import User
+from classes.models import Class  # Import Class model
+from enrollments.models import AcademicYear  # Import AcademicYear model
 
-class Class(models.Model):
-    CLASS_CHOICES = [
+# Create schools manually
+def create_academic_year_and_classes():
+    academic_year = AcademicYear.objects.create(
+        year="2024-2025",
+        start_date="2024-09-01",
+        end_date="2025-06-15"
+    )
+
+   
+    school_id = 1  # Assuming school with ID 1 exists
+
+    # Create sections for each class from "1ère Année" to "NS4" for the specified school
+    class_names = [
         ('1A', '1ère Année A'), ('1B', '1ère Année B'), ('1C', '1ère Année C'), ('1D', '1ère Année D'), ('1E', '1ère Année E'),
         ('2A', '2ème Année A'), ('2B', '2ème Année B'), ('2C', '2ème Année C'), ('2D', '2ème Année D'), ('2E', '2ème Année E'),
         ('3A', '3ème Année A'), ('3B', '3ème Année B'), ('3C', '3ème Année C'), ('3D', '3ème Année D'), ('3E', '3ème Année E'),
@@ -19,22 +41,17 @@ class Class(models.Model):
         ('NS2A', 'NS2 A'), ('NS2B', 'NS2 B'), ('NS2C', 'NS2 C'), ('NS2D', 'NS2 D'), ('NS2E', 'NS2 E'),
         ('NS3A', 'NS3 A'), ('NS3B', 'NS3 B'), ('NS3C', 'NS3 C'), ('NS3D', 'NS3 D'), ('NS3E', 'NS3 E'),
         ('NS4A', 'NS4 A'), ('NS4B', 'NS4 B'), ('NS4C', 'NS4 C'), ('NS4D', 'NS4 D'), ('NS4E', 'NS4 E'),
-        # Secondaire Traditionnel
-        ('3S1', '3ème Sec A'), ('3S2', '3ème Sec B'), ('3S3', '3ème Sec C'), ('3S4', '3ème Sec D'), ('3S5', '3ème Sec E'),
-        ('SE1', 'Seconde A'), ('SE2', 'Seconde B'), ('SE3', 'Seconde C'), ('SE4', 'Seconde D'), ('SE5', 'Seconde E'),
-        ('RH1', 'Rhéto A'), ('RH2', 'Rhéto B'), ('RH3', 'Rhéto C'), ('RH4', 'Rhéto D'), ('RH5', 'Rhéto E'),
-        ('PH1', 'Philo A'), ('PH2', 'Philo B'), ('PH3', 'Philo C'), ('PH4', 'Philo D'), ('PH5', 'Philo E'),
     ]
-    
-    school = models.ForeignKey(School, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100, choices=CLASS_CHOICES)
-    
-    # Lazy import for AcademicYear to avoid circular import
-    def get_academic_year_model(self):
-        from enrollments.models import AcademicYear  # Importing inside the method
-        return AcademicYear.objects.first()  # Example: return the first AcademicYear object
-    
-    academic_year = models.ForeignKey('enrollments.AcademicYear', on_delete=models.CASCADE, default=1)  # Lazy reference to 'AcademicYear'
 
-    def __str__(self):
-        return f"{self.name} ({self.academic_year.year})"
+    # Create classes and link them to the academic year and school
+    for class_code, class_name in class_names:
+        class_instance = Class.objects.create(
+            school_id=school_id,  # Assuming school ID is 1 (can replace with dynamic value)
+            name=class_name,
+            academic_year=academic_year
+        )
+        print(f"Created class: {class_name} ({class_code})")
+
+
+if __name__ == '__main__':
+    create_academic_year_and_classes()

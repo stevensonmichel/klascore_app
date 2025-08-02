@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'transcripts',
     'authentication',
     'schools',
+    'enrollments',
     'admin_panel',
     'professor_panel',
     'student_panel',
